@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamic Form Creation</title>
+</head>
+<body>
+  <h1>Dynamic Form Creation</h1>
+
+  <div id="form-container">
+    <!-- Form will be dynamically created here -->
+  </div>
+
+  <button onclick="addFormFields()">Add Form Fields</button>
+  <button onclick="submitForm()">Submit</button>
+
+  <script>
+    var formContainer = document.getElementById('form-container');
+    var fieldCount = 0;
+
+    function addFormFields() {
+      fieldCount++;
+
+      // Create labels
+      var labels = ['First Name', 'Last Name', 'Address', 'Pincode', 'Gender', 'Food', 'State', 'Country'];
+
+      for (var i = 0; i < labels.length; i++) {
+        var label = document.createElement('label');
+        label.innerHTML = labels[i] + ': ';
+
+        var inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.name = labels[i].toLowerCase().replace(/\s/g, '_');
+        inputField.placeholder = labels[i];
+
+        formContainer.appendChild(label);
+        formContainer.appendChild(inputField);
+        formContainer.appendChild(document.createElement('br'));
+      }
+    }
+
+    function submitForm() {
+      var form = document.createElement('form');
+
+      var inputFields = formContainer.getElementsByTagName('input');
+      for (var i = 0; i < inputFields.length; i++) {
+        var inputField = inputFields[i];
+
+        var label = document.createElement('label');
+        label.innerHTML = inputField.name.replace(/_/g, ' ').toUpperCase() + ': ';
+
+        var fieldValue = inputField.value;
+
+        var formField = document.createElement('p');
+        formField.innerHTML = fieldValue;
+
+        form.appendChild(label);
+        form.appendChild(formField);
+      }
+
+      document.body.appendChild(form);
+    }
+  </script>
+</body>
+</html>
